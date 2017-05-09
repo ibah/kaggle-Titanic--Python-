@@ -40,6 +40,7 @@ import matplotlib.pyplot as plt
 # I usually work interactively in Spyder on different platforms.
 # The code below allows me to set the proper working directory for each platform.
 import os
+os.chdir(r'/home/michal/Dropbox/cooperation/_python/Titanic/models')
 os.chdir(r'D:\data\Dropbox\cooperation\_python\Titanic\models')
 os.chdir(r'G:\Dropbox\cooperation\_python\Titanic\models')
 
@@ -50,8 +51,6 @@ test = pd.read_csv('../input/test.csv')
 # Preprocessing
 train.info()
 train = train.drop('PassengerId', axis=1)
-# -> drop passanger id
-train.head()
 
 # Survived
 train.Survived.value_counts(normalize=True)
@@ -74,14 +73,7 @@ train.groupby('Name_Title').Survived.mean().sort_values() # Series
 train['Name_Length'] = train.Name.apply(lambda x: len(x))
 train.groupby('Name_Length').Survived.mean().plot() # there's some relationship
 # let's aggregate into bins (5)
-# pd.cut
-#pd.cut(train.Name_Length, 5).value_counts()
-#train.groupby(pd.cut(train.Name_Length, 5)).size()
-#train.groupby(pd.cut(train.Name_Length, 5)).Survived.mean()
-# -> these groups are very unequal in sizes, it looks like a exponential decline of lenght
-#   this should be correced, as the last bins contain very little data
-# pd.qcut
-pd.qcut(train.Name_Length, 5).value_counts() # much better!
+pd.qcut(train.Name_Length, 5).value_counts()
 # -> data divided into equal quantiles
 train.groupby(pd.qcut(train.Name_Length, 5)).size()
 train.groupby(pd.qcut(train.Name_Length, 5)).Survived.mean() # Series
@@ -89,9 +81,7 @@ train.groupby(pd.qcut(train.Name_Length, 5)).Survived.mean().plot()
 # -> see the clear upward trend
 
 # Sex
-train['Sex'].value_counts()
 train['Sex'].value_counts(normalize=True)
-sns.countplot(train.Sex)
 sns.countplot(train.Sex, hue=train.Survived)
 train.groupby('Sex').Survived.mean() # big difference
 
@@ -109,13 +99,11 @@ train.groupby(pd.qcut(train['Age'], 5)).Survived.mean().plot()
 train['SibSp'].value_counts() # actually only 0, 1 have much data; 2,3,4 have some data
 train.groupby('SibSp').size() # ditto
 train.groupby('SibSp').Survived.mean()
-sns.countplot(train.SibSp)
 sns.countplot(train.SibSp, hue=train.Survived) # 1-2 seems best
 
 # Parch
 train['Parch'].value_counts() # only 0,1,2 have enough data
 train.groupby('Parch').Survived.mean()
-sns.countplot(train.Parch)
 sns.countplot(train.Parch, hue=train.Survived) # 1-2 seems best, again
 np.corrcoef(train.SibSp, train.Parch)[0,1] # there is some positive correlation
 
