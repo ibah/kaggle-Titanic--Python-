@@ -93,10 +93,7 @@ train = tmp[:train_n]
 test = tmp[train_n:]
 
 # model tuning and fitting
-rf = RandomForestClassifier(max_features='auto',
-                            oob_score=True,
-                            random_state=1,
-                            n_jobs=-1)
+rf = RandomForestClassifier(n_jobs=-1)
 params = {"min_samples_leaf" : [1, 5, 10],
          "min_samples_split" : [2, 5, 10, 15],
          "n_estimators": [500, 800, 1200]}
