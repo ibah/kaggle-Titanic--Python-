@@ -6,10 +6,11 @@ Kaggle - Titanic competition
 
 Topic: fast summary of best ideas to build a running model
 
-Models: RandomForest, XGBoost
-Ensembling: none -> XGBoost?
+Models: RandomForest
+Ensembling: none
 Tuning: GridSearch CV
-CV: ?
+CV: default 3-fold
+Inspriation: https://www.kaggle.com/zlatankr/titanic-random-forest-82-78 by Zlatan Kremonic
 
 Preprocessing: ?
 
@@ -37,7 +38,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-# I usually work interactively in Spyder on different platforms.
+# I work interactively in Spyder on different platforms.
 # The code below allows me to set the proper working directory for each platform.
 import os
 os.chdir(r'/home/michal/Dropbox/cooperation/_python/Titanic/models')
